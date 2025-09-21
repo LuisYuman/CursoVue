@@ -4,130 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
-    <title>Vue Introducción</title>
+    <title>Vue Instancia</title>
 </head>
 <body>
-    <!-- Ejemplo 1: Hola Mundo -->
+    <!-- Ejemplo 1: Instancia Vue básica -->
     <div id="app">
-        {{ message }}
+        <p>{{ a }}</p>
+        <button @click="a++">Incrementar</button>
     </div>
     <script>
     const { createApp } = Vue;
     createApp({
         data() {
-            return { message: 'Hola Vue!' }
+            return { a: 1 }
         }
     }).mount('#app');
     </script>
 
-    <!-- Ejemplo 2: v-bind -->
-    <div id="app-2">
-        <span v-bind:title="message">
-            Mueva el mouse sobre mí durante unos segundos para ver mi título enlazado dinámicamente.
-        </span>
-    </div>
-    <script>
-    createApp({
-        data() {
-            return { message: 'Usted cargó esta página el ' + new Date().toLocaleString() }
-        }
-    }).mount('#app-2');
-    </script>
-
-    <!-- Ejemplo 3: v-if -->
-    <div id="app-3">
-        <span v-if="seen">Ahora me ves</span>
-    </div>
-    <script>
-    createApp({
-        data() {
-            return { seen: true }
-        }
-    }).mount('#app-3');
-    </script>
-
-    <!-- Ejemplo 4: v-for -->
-    <div id="app-4">
-        <ol>
-            <li v-for="todo in todos" :key="todo.text">
-                {{ todo.text }}
-            </li>
-        </ol>
+    <!-- Ejemplo 2: Object.freeze -->
+    <div id="app-freeze">
+        <p>{{ foo }}</p>
+        <button @click="foo = 'baz'">Cámbialo</button>
     </div>
     <script>
     createApp({
         data() {
             return {
-                todos: [
-                    { text: 'Aprender JavaScript' },
-                    { text: 'Aprender Vue' },
-                    { text: 'Construir algo increíble' },
-                    { text: 'Otra tarea' }
-                    
-                ]
+                foo: 'bar'
             }
         }
-    }).mount('#app-4');
+    }).mount('#app-freeze');
     </script>
 
-    <!-- Ejemplo 5: v-on -->
-    <div id="app-5">
-        <p>{{ message }}</p>
-        <button v-on:click="reverseMessage">Mensaje invertido</button>
+    <!-- Ejemplo 3: Métodos y propiedades de instancia -->
+    <div id="app-instance">
+        <p>{{ a }}</p>
     </div>
     <script>
     createApp({
         data() {
-            return { message: 'Hola Vue.js!' }
-        },
-        methods: {
-            reverseMessage() {
-                this.message = this.message.split('').reverse().join('');
-            }
+            return { a: 1 }
         }
-    }).mount('#app-5');
-    </script>
-
-    <!-- Ejemplo 6: v-model -->
-    <div id="app-6">
-        <p>{{ message }}</p>
-        <input v-model="message">
-    </div>
-    <script>
-    createApp({
-        data() {
-            return { message: 'Hola Vue!' }
-        }
-    }).mount('#app-6');
-    </script>
-
-    <!-- Ejemplo 7: Componente -->
-    <div id="app-7">
-        <ol>
-            <todo-item
-                v-for="item in groceryList"
-                v-bind:todo="item"
-                v-bind:key="item.id">
-            </todo-item>
-        </ol>
-    </div>
-    <script>
-    const app7 = Vue.createApp({
-        data() {
-            return {
-                groceryList: [
-                    { id: 0, text: 'Vegetales' },
-                    { id: 1, text: 'Queso' },
-                    { id: 2, text: 'Cualquier otra cosa que se supone que los humanos coman' }
-                ]
-            }
-        }
-    });
-    app7.component('todo-item', {
-        props: ['todo'],
-        template: `<li>{{ todo.text }}</li>`
-    });
-    app7.mount('#app-7');
+    }).mount('#app-instance');
     </script>
 </body>
 </html>
