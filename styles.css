@@ -4,27 +4,67 @@ body {
     margin: 0;
     padding: 40px;
 }
-
-div {
+#todo-app {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     padding: 24px;
-    margin-bottom: 24px;
     max-width: 400px;
+    margin: auto;
 }
-
-input {
-    padding: 8px;
-    border: 1px solid #d1d5da;
-    border-radius: 4px;
+input[type="text"], input[type="search"] {
+    padding: 12px;
+    border: 1.5px solid #d1d5da;
+    border-radius: 6px;
     width: 100%;
+    font-size: 18px;
     margin-bottom: 12px;
+    box-sizing: border-box;
+}
+form {
+    display: flex;
+    gap: 8px;
+}
+form input[type="text"], form input[type="search"] {
+    flex: 1;
+    margin-bottom: 0;
+}
+form button {
+    height: 48px;
     font-size: 16px;
 }
-
-p {
-    font-size: 18px;
-    color: #24292e;
-    margin: 0;
+button {
+    padding: 8px 12px;
+    border: none;
+    background: #2c974b;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background: #26713a;
+}
+.completed {
+    text-decoration: line-through;
+    color: #888;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+li span {
+    flex: 1;
+    margin-left: 8px;
+}
+li button {
+    margin-left: 8px;
+    background: #e55353;
+}
+li button:hover {
+    background: #b52a2a;
 }

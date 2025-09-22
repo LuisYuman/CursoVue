@@ -5,74 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Componentes Básicos Vue</title>
+    <title>Proyecto Final: To-Do List Vue</title>
 </head>
 <body>
-    <!-- Ejemplo base: botón contador -->
-    <div id="components-demo">
-        <button-counter></button-counter>
-        <button-counter></button-counter>
-        <button-counter></button-counter>
+    <div id="todo-app">
+        <h1>Lista de Tareas</h1>
+        <form @submit.prevent="addTask">
+            <input v-model="newTask" placeholder="Nueva tarea" autocomplete="off">
+            <button type="submit">Agregar</button>
+        </form>
+        <ul>
+            <li v-for="task in tasks" :key="task.id">
+                <input type="checkbox" v-model="task.completed">
+                <span :class="{ completed: task.completed }">{{ task.text }}</span>
+                <button @click="removeTask(task.id)">Eliminar</button>
+            </li>
+        </ul>
+        <p>
+            Completadas: {{ completedCount }} /
+            Pendientes: {{ pendingCount }}
+        </p>
     </div>
-
-    <!-- Props: blog post simple -->
-    <div id="blog-post-demo">
-        <blog-post title="Mi viaje con Vue"></blog-post>
-        <blog-post title="Blogging con Vue"></blog-post>
-        <blog-post title="¿Por qué Vue es tan divertido?"></blog-post>
-    </div>
-
-    <!-- Props dinámicas con v-for -->
-    <div id="blog-post-list-demo">
-        <blog-post
-            v-for="post in posts"
-            :key="post.id"
-            :title="post.title"
-            :content="post.content"
-        ></blog-post>
-    </div>
-
-    <!-- Props como objeto -->
-    <div id="blog-post-object-demo">
-        <blog-post
-            v-for="post in posts"
-            :key="post.id"
-            :post="post"
-        ></blog-post>
-    </div>
-
-    <!-- Comunicación hijo-padre con eventos -->
-    <div id="blog-posts-events-demo">
-        <div :style="{ fontSize: postFontSize + 'em' }">
-            <blog-post
-                v-for="post in posts"
-                :key="post.id"
-                :post="post"
-                @enlarge-text="postFontSize += 0.1"
-            ></blog-post>
-        </div>
-    </div>
-
-    <!-- v-model en componente personalizado -->
-    <div id="custom-input-demo">
-        <custom-input v-model="searchText"></custom-input>
-        <p>Texto de búsqueda: {{ searchText }}</p>
-    </div>
-
-    <!-- Slots -->
-    <div id="slot-demo">
-        <alert-box>
-            Algo ha ocurrido mal.
-        </alert-box>
-    </div>
-
-    <!-- Componentes dinámicos -->
-    <div id="dynamic-demo">
-        <button @click="currentTab = 'tab-a'">Tab A</button>
-        <button @click="currentTab = 'tab-b'">Tab B</button>
-        <component :is="currentTabComponent"></component>
-    </div>
-
     <script src="index.js"></script>
 </body>
 </html>
