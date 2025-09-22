@@ -1,72 +1,87 @@
 const { createApp } = Vue;
 
-// Ejemplo 1: Interpolación de texto
+// Ejemplo 1: Propiedad computada básica
 createApp({
     data() {
-        return { msg: '¡Hola desde Vue!' }
-    }
-}).mount('#app-text');
-
-// Ejemplo 2: Interpolación única con v-once
-createApp({
-    data() {
-        return { msg: 'Texto fijo' }
-    }
-}).mount('#app-once');
-
-// Ejemplo 3: HTML puro con v-html
-createApp({
-    data() {
-        return { rawHtml: '<strong>Texto en negrita</strong>' }
-    }
-}).mount('#app-html');
-
-// Ejemplo 4: v-bind en atributos
-createApp({
-    data() {
-        return {
-            dynamicId: 'mi-id',
-            isButtonDisabled: true
+        return { message: 'Hola' }
+    },
+    computed: {
+        reversedMessage() {
+            return this.message.split('').reverse().join('');
         }
     }
-}).mount('#app-bind');
+}).mount('#computed-basic');
 
-// Ejemplo 5: Expresiones JavaScript
+// Ejemplo 2: Computed vs Método
 createApp({
     data() {
-        return {
-            number: 5,
-            ok: true,
-            message: 'Vue',
-            id: 10
+        return { message: 'Vue' }
+    },
+    computed: {
+        reversedMessage() {
+            return this.message.split('').reverse().join('');
         }
-    }
-}).mount('#app-expr');
-
-// Ejemplo 6: Directiva v-if
-createApp({
-    data() {
-        return { seen: true }
-    }
-}).mount('#app-if');
-
-// Ejemplo 7: v-bind y v-on con argumentos y modo abreviado
-createApp({
-    data() {
-        return { url: 'https://vuejs.org' }
     },
     methods: {
-        doSomething() {
-            alert('¡Botón clickeado!');
+        reverseMessage() {
+            return this.message.split('').reverse().join('');
         }
     }
-}).mount('#app-short');
+}).mount('#computed-method');
 
-// Ejemplo 8: Modificador .prevent
+// Ejemplo 3: Computed con getter y setter
 createApp({
-    methods: {
-        onSubmit() {
-            alert('Formulario enviado (preventDefault aplicado)');
+    data() {
+        return {
+            firstName: 'Foo',
+            lastName: 'Bar'
+        }
+    },
+    computed: {
+        fullName: {
+            get() {
+                return this.firstName + ' ' + this.lastName;
+            },
+            set(newValue) {
+                const names = newValue.split(' ');
+                this.firstName = names[0];
+                this.lastName = names.slice(1).join(' ');
+            }
         }
     }
-}).mount('#app-prevent');
+}).mount('#computed-setter');
+
+// Ejemplo 4: Watcher (observador)
+createApp({
+    data() {
+        return {
+            question: '',
+            answer: 'No puedo darte una respuesta hasta que hagas una pregunta!'
+        }
+    },
+    watch: {
+        question(newQuestion) {
+            this.answer = 'Esperando que deje de escribir...';
+            this.debouncedGetAnswer();
+        }
+    },
+    created() {
+        this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
+    },
+    methods: {
+        getAnswer() {
+            if (this.question.indexOf('?') === -1) {
+                this.answer = 'Las preguntas suelen contener un signo de interrogación. ;-)';
+                return;
+            }
+            this.answer = 'Pensando...';
+            axios.get('https://yesno.wtf/api')
+                .then(response => {
+                    this.answer = _.capitalize(response.data.answer);
+                })
+                .catch(error => {
+                    this.answer = '¡Error! No se pudo alcanzar la API. ' + error;
+                });
+        }
+    }
+}).mount('#watch-example');

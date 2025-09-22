@@ -4,43 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
-    <title>Vue Sintaxis Template</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <title>Vue Computed & Watch</title>
 </head>
 <body>
-    <div id="app-text">
-        <span>Message: {{ msg }}</span>
+    <!-- Ejemplo 1: Propiedad computada básica -->
+    <div id="computed-basic">
+        <p>Mensaje original: "{{ message }}"</p>
+        <p>Mensaje invertido computado: "{{ reversedMessage }}"</p>
     </div>
-    <div id="app-once">
-        <span v-once>Esto nunca cambiará: {{ msg }}</span>
+
+    <!-- Ejemplo 2: Computed vs Método -->
+    <div id="computed-method">
+        <p>Mensaje original: "{{ message }}"</p>
+        <p>Mensaje invertido (computed): "{{ reversedMessage }}"</p>
+        <p>Mensaje invertido (método): "{{ reverseMessage() }}"</p>
     </div>
-    <div id="app-html">
-        <p>Using mustaches: {{ rawHtml }}</p>
-        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+
+    <!-- Ejemplo 3: Computed con getter y setter -->
+    <div id="computed-setter">
+        <p>Nombre completo: <input v-model="fullName"></p>
+        <p>Primer nombre: {{ firstName }}</p>
+        <p>Apellido: {{ lastName }}</p>
     </div>
-    <div id="app-bind">
-        <div v-bind:id="dynamicId">Este div tiene un id dinámico</div>
-        <button v-bind:disabled="isButtonDisabled">Button</button>
+
+    <!-- Ejemplo 4: Watcher (observador) -->
+    <div id="watch-example">
+        <p>
+            Haz una pregunta de sí/no:
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
     </div>
-    <div id="app-expr">
-        <p>{{ number + 1 }}</p>
-        <p>{{ ok ? 'YES' : 'NO' }}</p>
-        <p>{{ message.split('').reverse().join('') }}</p>
-        <div v-bind:id="'list-' + id">ID dinámico</div>
-    </div>
-    <div id="app-if">
-        <p v-if="seen">Now you see me</p>
-    </div>
-    <div id="app-short">
-        <a v-bind:href="url">Enlace con v-bind</a>
-        <a :href="url">Enlace con :href</a>
-        <button v-on:click="doSomething">Click con v-on</button>
-        <button @click="doSomething">Click con @</button>
-    </div>
-    <div id="app-prevent">
-        <form v-on:submit.prevent="onSubmit">
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
