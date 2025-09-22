@@ -1,94 +1,99 @@
 const { createApp } = Vue;
 
-// Escuchar eventos: contador simple
+// Input básico
 createApp({
     data() {
-        return { counter: 0 }
+        return { message: '' }
     }
-}).mount('#event-counter');
+}).mount('#form-input');
 
-// Métodos manejadores de eventos
+// Textarea
 createApp({
     data() {
-        return { name: 'Vue.js' }
-    },
-    methods: {
-        saludar(event) {
-            alert('Hola ' + this.name + '!');
-            if (event) {
-                alert(event.target.tagName);
-            }
-        }
+        return { message: '' }
     }
-}).mount('#event-method');
+}).mount('#form-textarea');
 
-// Métodos manejadores en línea
-createApp({
-    methods: {
-        di(mensaje) {
-            alert(mensaje);
-        }
-    }
-}).mount('#event-inline');
-
-// Acceso al evento DOM original
-createApp({
-    methods: {
-        alertar(message, event) {
-            if (event) event.preventDefault();
-            alert(message);
-        }
-    }
-}).mount('#event-original');
-
-// Modificadores de eventos
+// Checkbox simple
 createApp({
     data() {
-        return { inputText: '' }
-    },
-    methods: {
-        onSubmit() {
-            alert('Formulario enviado: ' + this.inputText);
-            this.inputText = '';
-        },
-        hazEsto() {
-            alert('¡Evento modificado!');
-        }
+        return { checked: false }
     }
-}).mount('#event-modifiers');
+}).mount('#form-checkbox');
 
-// Modificadores de teclas
+// Múltiples checkboxes
 createApp({
-    methods: {
-        submit() {
-            alert('¡Enter presionado!');
-        },
-        clear() {
-            alert('¡Input limpiado!');
-        },
-        onCtrlClick() {
-            alert('Ctrl + Click');
-        },
-        onCtrlExactClick() {
-            alert('Ctrl Exacto');
-        },
-        onClickExact() {
-            alert('Sin modificadores');
-        }
+    data() {
+        return { checkedNames: [] }
     }
-}).mount('#event-keys');
+}).mount('#form-checkbox-array');
 
-// Modificador de botón del ratón
+// Radio
 createApp({
-    methods: {
-        leftClick() {
-            alert('Click izquierdo');
-        },
-        rightClick() {
-            alert('Click derecho');
-        },
-        middleClick() {
-            alert('Click medio');
+    data() {
+        return { picked: '' }
+    }
+}).mount('#form-radio');
+
+// Select simple
+createApp({
+    data() {
+        return { selected: '' }
+    }
+}).mount('#form-select');
+
+// Select múltiple
+createApp({
+    data() {
+        return { selected: [] }
+    }
+}).mount('#form-select-multiple');
+
+// Select con opciones dinámicas
+createApp({
+    data() {
+        return {
+            selected: 'A',
+            options: [
+                { text: 'Uno', value: 'A' },
+                { text: 'Dos', value: 'B' },
+                { text: 'Tres', value: 'C' }
+            ]
         }
     }
-}).mount('#event-mouse');
+}).mount('#form-select-dynamic');
+
+// Checkbox con true-value y false-value
+createApp({
+    data() {
+        return { toggle: 'no' }
+    }
+}).mount('#form-checkbox-values');
+
+// Radio con valor dinámico
+createApp({
+    data() {
+        return {
+            pick: '',
+            a: 'valor-dinamico'
+        }
+    }
+}).mount('#form-radio-dynamic');
+
+// Select con objeto como valor
+createApp({
+    data() {
+        return { selected: { number: 0 } }
+    }
+}).mount('#form-select-object');
+
+// Modificadores lazy, number y trim
+createApp({
+    data() {
+        return {
+            msg: '',
+            age: null,
+            msgTrim: ''
+        }
+    }
+}).mount('#form-modifiers');

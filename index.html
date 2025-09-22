@@ -5,57 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Manejo de eventos Vue</title>
+    <title>Binding en Formularios Vue</title>
 </head>
 <body>
-    <!-- Escuchar eventos: contador simple -->
-    <div id="event-counter">
-        <button v-on:click="counter += 1">Add 1</button>
-        <p>Se ha hecho clic en el botón de arriba {{ counter }} veces.</p>
+    <!-- Input básico -->
+    <div id="form-input">
+        <input v-model="message" placeholder="edíteme">
+        <p>El mensaje es: {{ message }}</p>
     </div>
 
-    <!-- Métodos manejadores de eventos -->
-    <div id="event-method">
-        <button v-on:click="saludar">Saludar</button>
+    <!-- Textarea -->
+    <div id="form-textarea">
+        <span>El mensaje multilínea es:</span>
+        <p style="white-space: pre-line;">{{ message }}</p>
+        <br>
+        <textarea v-model="message" placeholder="agregar múltiples líneas"></textarea>
     </div>
 
-    <!-- Métodos manejadores en línea -->
-    <div id="event-inline">
-        <button v-on:click="di('hola')">Di hola</button>
-        <button v-on:click="di('que')">Di que</button>
+    <!-- Checkbox simple -->
+    <div id="form-checkbox">
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
     </div>
 
-    <!-- Acceso al evento DOM original -->
-    <div id="event-original">
-        <button v-on:click="alertar('El Form no se puede enviar aun.', $event)">
-            Enviar
-        </button>
+    <!-- Múltiples checkboxes -->
+    <div id="form-checkbox-array">
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
     </div>
 
-    <!-- Modificadores de eventos -->
-    <div id="event-modifiers">
-        <form v-on:submit.prevent="onSubmit">
-            <input v-model="inputText" placeholder="Escribe algo">
-            <button type="submit">Enviar</button>
-        </form>
-        <button v-on:click.stop="hazEsto">Click con .stop</button>
-        <button v-on:click.once="hazEsto">Click con .once</button>
+    <!-- Radio -->
+    <div id="form-radio">
+        <input type="radio" id="uno" value="Uno" v-model="picked">
+        <label for="uno">Uno</label>
+        <br>
+        <input type="radio" id="dos" value="Dos" v-model="picked">
+        <label for="dos">Dos</label>
+        <br>
+        <span>Eligió: {{ picked }}</span>
     </div>
 
-    <!-- Modificadores de teclas -->
-    <div id="event-keys">
-        <input v-on:keyup.enter="submit" placeholder="Presiona Enter">
-        <input v-on:keyup.alt.67="clear" placeholder="Alt + C para limpiar">
-        <button @click.ctrl="onCtrlClick">Ctrl + Click</button>
-        <button @click.ctrl.exact="onCtrlExactClick">Ctrl Exacto</button>
-        <button @click.exact="onClickExact">Sin modificadores</button>
+    <!-- Select simple -->
+    <div id="form-select">
+        <select v-model="selected">
+            <option disabled value="">Seleccione un elemento</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Seleccionado: {{ selected }}</span>
     </div>
 
-    <!-- Modificador de botón del ratón -->
-    <div id="event-mouse">
-        <button @click.left="leftClick">Izquierdo</button>
-        <button @click.right="rightClick">Derecho</button>
-        <button @click.middle="middleClick">Medio</button>
+    <!-- Select múltiple -->
+    <div id="form-select-multiple">
+        <select v-model="selected" multiple>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <br>
+        <span>Seleccionados: {{ selected }}</span>
+    </div>
+
+    <!-- Select con opciones dinámicas -->
+    <div id="form-select-dynamic">
+        <select v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Seleccionado: {{ selected }}</span>
+    </div>
+
+    <!-- Checkbox con true-value y false-value -->
+    <div id="form-checkbox-values">
+        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+        <span>Valor: {{ toggle }}</span>
+    </div>
+
+    <!-- Radio con valor dinámico -->
+    <div id="form-radio-dynamic">
+        <input type="radio" v-model="pick" v-bind:value="a">
+        <span>Valor: {{ pick }}</span>
+    </div>
+
+    <!-- Select con objeto como valor -->
+    <div id="form-select-object">
+        <select v-model="selected">
+            <option v-bind:value="{ number: 123 }">123</option>
+        </select>
+        <span>Seleccionado: {{ selected.number }}</span>
+    </div>
+
+    <!-- Modificadores lazy, number y trim -->
+    <div id="form-modifiers">
+        <input v-model.lazy="msg" placeholder="Lazy (change)">
+        <input v-model.number="age" type="number" placeholder="Edad (number)">
+        <input v-model.trim="msgTrim" placeholder="Trim">
+        <p>Lazy: {{ msg }}</p>
+        <p>Edad: {{ age }}</p>
+        <p>Trim: {{ msgTrim }}</p>
     </div>
 
     <script src="index.js"></script>
