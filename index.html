@@ -5,55 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Renderización Condicional Vue</title>
+    <title>Renderizado de Lista Vue</title>
 </head>
 <body>
-    <!-- Renderización condicional: v-if y v-else -->
-    <div id="condicional-basic">
-        <button @click="ok = !ok">Toggle OK</button>
-        <h1 v-if="ok">Sí</h1>
-        <h1 v-else>No</h1>
+    <!-- Renderizado de lista: Array básico -->
+    <ul id="example-1">
+        <li v-for="item in items" :key="item.mensaje">
+            {{ item.mensaje }}
+        </li>
+    </ul>
+
+    <!-- Renderizado de lista: Array con índice y variable externa -->
+    <ul id="example-2">
+        <li v-for="(item, index) in items" :key="index">
+            {{ mensajePadre }} - {{ index }} - {{ item.mensaje }}
+        </li>
+    </ul>
+
+    <!-- Renderizado de lista: Objeto -->
+    <ul id="v-for-object">
+        <li v-for="value in object" :key="value">
+            {{ value }}
+        </li>
+    </ul>
+    <div id="v-for-object-keys">
+        <div v-for="(value, key, index) in object" :key="key">
+            {{ index }}. {{ key }}: {{ value }}
+        </div>
     </div>
 
-    <!-- Renderización condicional: v-if en template -->
-    <div id="condicional-template">
-        <button @click="ok = !ok">Toggle Grupo</button>
-        <template v-if="ok">
-            <h1>Título</h1>
-            <p>Párrafo 1</p>
-            <p>Párrafo 2</p>
-        </template>
-        <template v-else>
-            <h1>No hay grupo</h1>
-        </template>
+    <!-- Renderizado de lista: key único -->
+    <ul id="example-key">
+        <li v-for="item in items" :key="item.id">
+            {{ item.mensaje }}
+        </li>
+    </ul>
+
+    <!-- Renderizado de lista: Métodos de mutación -->
+    <div id="mutation-example">
+        <button @click="addItem">Agregar elemento</button>
+        <ul>
+            <li v-for="item in items" :key="item.id">{{ item.mensaje }}</li>
+        </ul>
     </div>
 
-    <!-- Renderización condicional: v-else-if -->
-    <div id="condicional-elseif">
-        <button @click="nextType">Siguiente tipo</button>
-        <div v-if="type === 'A'">A</div>
-        <div v-else-if="type === 'B'">B</div>
-        <div v-else-if="type === 'C'">C</div>
-        <div v-else>No es A, B ni C</div>
+    <!-- Renderizado de lista: Filtrado con propiedad computada -->
+    <ul id="filtered-list">
+        <li v-for="n in numerosImpares" :key="n">{{ n }}</li>
+    </ul>
+
+    <!-- Renderizado de lista: Rango -->
+    <div id="range-list">
+        <span v-for="n in 10" :key="n">{{ n }} </span>
     </div>
 
-    <!-- Renderización condicional: key en inputs -->
-    <div id="condicional-key">
-        <button @click="toggleType">Alternar tipo de login</button>
-        <template v-if="loginType === 'username'">
-            <label>Nombre de Usuario</label>
-            <input placeholder="Ingrese su nombre de usuario" key="username-input">
+    <!-- Renderizado de lista: v-for en template -->
+    <ul id="template-list">
+        <template v-for="item in items">
+            <li :key="item.mensaje">{{ item.mensaje }}</li>
+            <li class="divider" role="presentation"></li>
         </template>
-        <template v-else>
-            <label>Email</label>
-            <input placeholder="Ingrese su email" key="email-input">
-        </template>
-    </div>
+    </ul>
 
-    <!-- Renderización condicional: v-show -->
-    <div id="condicional-show">
-        <button @click="ok = !ok">Toggle Show</button>
-        <h1 v-show="ok">¡Hola!</h1>
+    <!-- Renderizado de lista: v-for con v-if -->
+    <ul id="todos-list">
+        <li v-for="todo in todos" v-if="!todo.isComplete" :key="todo.id">
+            {{ todo.text }}
+        </li>
+    </ul>
+
+    <!-- Renderizado de lista: Todo List con componente -->
+    <div id="todo-list-example">
+        <form @submit.prevent="addNewTodo">
+            <label for="new-todo">Agregar tarea</label>
+            <input v-model="newTodoText" id="new-todo" placeholder="Ej: Alimentar al gato">
+            <button>Agregar</button>
+        </form>
+        <ul>
+            <todo-item
+                v-for="(todo, index) in todos"
+                :key="todo.id"
+                :title="todo.title"
+                @remove="todos.splice(index, 1)">
+            </todo-item>
+        </ul>
     </div>
 
     <script src="index.js"></script>
