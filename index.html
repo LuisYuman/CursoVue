@@ -8,14 +8,49 @@
     <title>Ejercicio Práctico Vue</title>
 </head>
 <body>
-    <div id="welcome-computed">
-        <input v-model="username" placeholder="Escribe tu nombre">
-        <p>{{ welcomeMessage }}</p>
+    <!-- Enlace de clases: Sintaxis de objeto -->
+    <div id="class-object">
+        <button @click="isActive = !isActive">Toggle Active</button>
+        <div v-bind:class="{ active: isActive }">Clase 'active' dinámica</div>
     </div>
 
-    <div id="welcome-method">
-        <input v-model="username" placeholder="Escribe tu nombre">
-        <p>{{ getWelcomeMessage() }}</p>
+    <!-- Enlace de clases: Múltiples clases con objeto -->
+    <div id="class-multi">
+        <button @click="hasError = !hasError">Toggle Error</button>
+        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+            Clases 'static', 'active' y 'text-danger' dinámicas
+        </div>
+    </div>
+
+    <!-- Enlace de clases: Sintaxis de array -->
+    <div id="class-array">
+        <button @click="isActive = !isActive">Toggle Active</button>
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]">
+            Clases con array y condición
+        </div>
+    </div>
+
+    <!-- Enlace de estilos: Sintaxis de objeto -->
+    <div id="style-object">
+        <button @click="fontSize += 2">Aumentar tamaño</button>
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+            Texto con color y tamaño dinámico
+        </div>
+    </div>
+
+    <!-- Enlace de estilos: Sintaxis de array -->
+    <div id="style-array">
+        <button @click="overridingStyles.color = overridingStyles.color === 'blue' ? 'green' : 'blue'">Cambiar color</button>
+        <div v-bind:style="[baseStyles, overridingStyles]">
+            Texto con estilos combinados
+        </div>
+    </div>
+
+    <!-- Enlace de estilos: Valores múltiples -->
+    <div id="style-multi">
+        <div v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">
+            Display con valores múltiples (flexbox)
+        </div>
     </div>
 
     <script src="index.js"></script>
