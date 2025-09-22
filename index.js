@@ -1,57 +1,48 @@
 const { createApp } = Vue;
 
-// Enlace de clases: Sintaxis de objeto
+// Renderización condicional: v-if y v-else
 createApp({
     data() {
-        return { isActive: false }
+        return { ok: true }
     }
-}).mount('#class-object');
+}).mount('#condicional-basic');
 
-// Enlace de clases: Múltiples clases con objeto
+// Renderización condicional: v-if en template
 createApp({
     data() {
-        return {
-            isActive: true,
-            hasError: false
+        return { ok: true }
+    }
+}).mount('#condicional-template');
+
+// Renderización condicional: v-else-if
+createApp({
+    data() {
+        return { type: 'A' }
+    },
+    methods: {
+        nextType() {
+            const types = ['A', 'B', 'C', 'D'];
+            let idx = types.indexOf(this.type);
+            this.type = types[(idx + 1) % types.length];
         }
     }
-}).mount('#class-multi');
+}).mount('#condicional-elseif');
 
-// Enlace de clases: Sintaxis de array
+// Renderización condicional: key en inputs
 createApp({
     data() {
-        return {
-            isActive: true,
-            activeClass: 'active',
-            errorClass: 'text-danger'
+        return { loginType: 'username' }
+    },
+    methods: {
+        toggleType() {
+            this.loginType = this.loginType === 'username' ? 'email' : 'username';
         }
     }
-}).mount('#class-array');
+}).mount('#condicional-key');
 
-// Enlace de estilos: Sintaxis de objeto
+// Renderización condicional: v-show
 createApp({
     data() {
-        return {
-            activeColor: 'red',
-            fontSize: 16
-        }
+        return { ok: true }
     }
-}).mount('#style-object');
-
-// Enlace de estilos: Sintaxis de array
-createApp({
-    data() {
-        return {
-            baseStyles: {
-                color: 'black',
-                fontWeight: 'bold'
-            },
-            overridingStyles: {
-                color: 'blue'
-            }
-        }
-    }
-}).mount('#style-array');
-
-// Enlace de estilos: Valores múltiples
-createApp({}).mount('#style-multi');
+}).mount('#condicional-show');

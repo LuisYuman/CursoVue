@@ -5,52 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Ejercicio Práctico Vue</title>
+    <title>Renderización Condicional Vue</title>
 </head>
 <body>
-    <!-- Enlace de clases: Sintaxis de objeto -->
-    <div id="class-object">
-        <button @click="isActive = !isActive">Toggle Active</button>
-        <div v-bind:class="{ active: isActive }">Clase 'active' dinámica</div>
+    <!-- Renderización condicional: v-if y v-else -->
+    <div id="condicional-basic">
+        <button @click="ok = !ok">Toggle OK</button>
+        <h1 v-if="ok">Sí</h1>
+        <h1 v-else>No</h1>
     </div>
 
-    <!-- Enlace de clases: Múltiples clases con objeto -->
-    <div id="class-multi">
-        <button @click="hasError = !hasError">Toggle Error</button>
-        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
-            Clases 'static', 'active' y 'text-danger' dinámicas
-        </div>
+    <!-- Renderización condicional: v-if en template -->
+    <div id="condicional-template">
+        <button @click="ok = !ok">Toggle Grupo</button>
+        <template v-if="ok">
+            <h1>Título</h1>
+            <p>Párrafo 1</p>
+            <p>Párrafo 2</p>
+        </template>
+        <template v-else>
+            <h1>No hay grupo</h1>
+        </template>
     </div>
 
-    <!-- Enlace de clases: Sintaxis de array -->
-    <div id="class-array">
-        <button @click="isActive = !isActive">Toggle Active</button>
-        <div v-bind:class="[isActive ? activeClass : '', errorClass]">
-            Clases con array y condición
-        </div>
+    <!-- Renderización condicional: v-else-if -->
+    <div id="condicional-elseif">
+        <button @click="nextType">Siguiente tipo</button>
+        <div v-if="type === 'A'">A</div>
+        <div v-else-if="type === 'B'">B</div>
+        <div v-else-if="type === 'C'">C</div>
+        <div v-else>No es A, B ni C</div>
     </div>
 
-    <!-- Enlace de estilos: Sintaxis de objeto -->
-    <div id="style-object">
-        <button @click="fontSize += 2">Aumentar tamaño</button>
-        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
-            Texto con color y tamaño dinámico
-        </div>
+    <!-- Renderización condicional: key en inputs -->
+    <div id="condicional-key">
+        <button @click="toggleType">Alternar tipo de login</button>
+        <template v-if="loginType === 'username'">
+            <label>Nombre de Usuario</label>
+            <input placeholder="Ingrese su nombre de usuario" key="username-input">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Ingrese su email" key="email-input">
+        </template>
     </div>
 
-    <!-- Enlace de estilos: Sintaxis de array -->
-    <div id="style-array">
-        <button @click="overridingStyles.color = overridingStyles.color === 'blue' ? 'green' : 'blue'">Cambiar color</button>
-        <div v-bind:style="[baseStyles, overridingStyles]">
-            Texto con estilos combinados
-        </div>
-    </div>
-
-    <!-- Enlace de estilos: Valores múltiples -->
-    <div id="style-multi">
-        <div v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">
-            Display con valores múltiples (flexbox)
-        </div>
+    <!-- Renderización condicional: v-show -->
+    <div id="condicional-show">
+        <button @click="ok = !ok">Toggle Show</button>
+        <h1 v-show="ok">¡Hola!</h1>
     </div>
 
     <script src="index.js"></script>
