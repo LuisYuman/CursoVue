@@ -4,38 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-    <title>Vue Computed & Watch</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Ejercicio Práctico Vue</title>
 </head>
 <body>
-    <!-- Ejemplo 1: Propiedad computada básica -->
-    <div id="computed-basic">
-        <p>Mensaje original: "{{ message }}"</p>
-        <p>Mensaje invertido computado: "{{ reversedMessage }}"</p>
+    <div id="welcome-computed">
+        <input v-model="username" placeholder="Escribe tu nombre">
+        <p>{{ welcomeMessage }}</p>
     </div>
 
-    <!-- Ejemplo 2: Computed vs Método -->
-    <div id="computed-method">
-        <p>Mensaje original: "{{ message }}"</p>
-        <p>Mensaje invertido (computed): "{{ reversedMessage }}"</p>
-        <p>Mensaje invertido (método): "{{ reverseMessage() }}"</p>
-    </div>
-
-    <!-- Ejemplo 3: Computed con getter y setter -->
-    <div id="computed-setter">
-        <p>Nombre completo: <input v-model="fullName"></p>
-        <p>Primer nombre: {{ firstName }}</p>
-        <p>Apellido: {{ lastName }}</p>
-    </div>
-
-    <!-- Ejemplo 4: Watcher (observador) -->
-    <div id="watch-example">
-        <p>
-            Haz una pregunta de sí/no:
-            <input v-model="question">
-        </p>
-        <p>{{ answer }}</p>
+    <div id="welcome-method">
+        <input v-model="username" placeholder="Escribe tu nombre">
+        <p>{{ getWelcomeMessage() }}</p>
     </div>
 
     <script src="index.js"></script>
