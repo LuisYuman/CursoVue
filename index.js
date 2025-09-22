@@ -1,41 +1,72 @@
 const { createApp } = Vue;
 
-// Ejemplo 1: Instancia Vue básica y reactividad
-const data = { a: 1 };
-const app = createApp({
-    data() {
-        return data;
-    }
-});
-app.mount('#app');
-
-// Ejemplo 2: Object.freeze (no reactivo)
-const obj = Object.freeze({ foo: 'bar' });
+// Ejemplo 1: Interpolación de texto
 createApp({
     data() {
-        return obj;
+        return { msg: '¡Hola desde Vue!' }
     }
-}).mount('#app-freeze');
+}).mount('#app-text');
 
-// Ejemplo 3: Métodos y propiedades de instancia + hook created
-const data2 = { a: 1 };
-const appInstance = createApp({
+// Ejemplo 2: Interpolación única con v-once
+createApp({
     data() {
-        return data2;
-    },
-    created() {
-        console.log('a es: ' + this.a);
+        return { msg: 'Texto fijo' }
     }
-});
-const vm = appInstance.mount('#app-instance');
+}).mount('#app-once');
 
-// Acceso a propiedades de instancia
-console.log(vm.$data === data2); // true
-console.log(vm.$el === document.getElementById('app-instance')); // true
+// Ejemplo 3: HTML puro con v-html
+createApp({
+    data() {
+        return { rawHtml: '<strong>Texto en negrita</strong>' }
+    }
+}).mount('#app-html');
 
-// $watch ejemplo
-if (vm.$watch) {
-    vm.$watch('a', function (newValue, oldValue) {
-        console.log('a cambió de', oldValue, 'a', newValue);
-    });
-}
+// Ejemplo 4: v-bind en atributos
+createApp({
+    data() {
+        return {
+            dynamicId: 'mi-id',
+            isButtonDisabled: true
+        }
+    }
+}).mount('#app-bind');
+
+// Ejemplo 5: Expresiones JavaScript
+createApp({
+    data() {
+        return {
+            number: 5,
+            ok: true,
+            message: 'Vue',
+            id: 10
+        }
+    }
+}).mount('#app-expr');
+
+// Ejemplo 6: Directiva v-if
+createApp({
+    data() {
+        return { seen: true }
+    }
+}).mount('#app-if');
+
+// Ejemplo 7: v-bind y v-on con argumentos y modo abreviado
+createApp({
+    data() {
+        return { url: 'https://vuejs.org' }
+    },
+    methods: {
+        doSomething() {
+            alert('¡Botón clickeado!');
+        }
+    }
+}).mount('#app-short');
+
+// Ejemplo 8: Modificador .prevent
+createApp({
+    methods: {
+        onSubmit() {
+            alert('Formulario enviado (preventDefault aplicado)');
+        }
+    }
+}).mount('#app-prevent');

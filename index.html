@@ -4,48 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
-    <title>Vue Instancia</title>
+    <title>Vue Sintaxis Template</title>
 </head>
 <body>
-    <!-- Ejemplo 1: Instancia Vue básica -->
-    <div id="app">
-        <p>{{ a }}</p>
-        <button @click="a++">Incrementar</button>
+    <div id="app-text">
+        <span>Message: {{ msg }}</span>
     </div>
-    <script>
-    const { createApp } = Vue;
-    createApp({
-        data() {
-            return { a: 1 }
-        }
-    }).mount('#app');
-    </script>
-
-    <!-- Ejemplo 2: Object.freeze -->
-    <div id="app-freeze">
-        <p>{{ foo }}</p>
-        <button @click="foo = 'baz'">Cámbialo</button>
+    <div id="app-once">
+        <span v-once>Esto nunca cambiará: {{ msg }}</span>
     </div>
-    <script>
-    createApp({
-        data() {
-            return {
-                foo: 'bar'
-            }
-        }
-    }).mount('#app-freeze');
-    </script>
-
-    <!-- Ejemplo 3: Métodos y propiedades de instancia -->
-    <div id="app-instance">
-        <p>{{ a }}</p>
+    <div id="app-html">
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
     </div>
-    <script>
-    createApp({
-        data() {
-            return { a: 1 }
-        }
-    }).mount('#app-instance');
-    </script>
+    <div id="app-bind">
+        <div v-bind:id="dynamicId">Este div tiene un id dinámico</div>
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+    </div>
+    <div id="app-expr">
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+        <p>{{ message.split('').reverse().join('') }}</p>
+        <div v-bind:id="'list-' + id">ID dinámico</div>
+    </div>
+    <div id="app-if">
+        <p v-if="seen">Now you see me</p>
+    </div>
+    <div id="app-short">
+        <a v-bind:href="url">Enlace con v-bind</a>
+        <a :href="url">Enlace con :href</a>
+        <button v-on:click="doSomething">Click con v-on</button>
+        <button @click="doSomething">Click con @</button>
+    </div>
+    <div id="app-prevent">
+        <form v-on:submit.prevent="onSubmit">
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <script src="index.js"></script>
 </body>
 </html>
