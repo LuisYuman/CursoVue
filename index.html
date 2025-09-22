@@ -5,90 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Renderizado de Lista Vue</title>
+    <title>Manejo de eventos Vue</title>
 </head>
 <body>
-    <!-- Renderizado de lista: Array básico -->
-    <ul id="example-1">
-        <li v-for="item in items" :key="item.mensaje">
-            {{ item.mensaje }}
-        </li>
-    </ul>
-
-    <!-- Renderizado de lista: Array con índice y variable externa -->
-    <ul id="example-2">
-        <li v-for="(item, index) in items" :key="index">
-            {{ mensajePadre }} - {{ index }} - {{ item.mensaje }}
-        </li>
-    </ul>
-
-    <!-- Renderizado de lista: Objeto -->
-    <ul id="v-for-object">
-        <li v-for="value in object" :key="value">
-            {{ value }}
-        </li>
-    </ul>
-    <div id="v-for-object-keys">
-        <div v-for="(value, key, index) in object" :key="key">
-            {{ index }}. {{ key }}: {{ value }}
-        </div>
+    <!-- Escuchar eventos: contador simple -->
+    <div id="event-counter">
+        <button v-on:click="counter += 1">Add 1</button>
+        <p>Se ha hecho clic en el botón de arriba {{ counter }} veces.</p>
     </div>
 
-    <!-- Renderizado de lista: key único -->
-    <ul id="example-key">
-        <li v-for="item in items" :key="item.id">
-            {{ item.mensaje }}
-        </li>
-    </ul>
-
-    <!-- Renderizado de lista: Métodos de mutación -->
-    <div id="mutation-example">
-        <button @click="addItem">Agregar elemento</button>
-        <ul>
-            <li v-for="item in items" :key="item.id">{{ item.mensaje }}</li>
-        </ul>
+    <!-- Métodos manejadores de eventos -->
+    <div id="event-method">
+        <button v-on:click="saludar">Saludar</button>
     </div>
 
-    <!-- Renderizado de lista: Filtrado con propiedad computada -->
-    <ul id="filtered-list">
-        <li v-for="n in numerosImpares" :key="n">{{ n }}</li>
-    </ul>
-
-    <!-- Renderizado de lista: Rango -->
-    <div id="range-list">
-        <span v-for="n in 10" :key="n">{{ n }} </span>
+    <!-- Métodos manejadores en línea -->
+    <div id="event-inline">
+        <button v-on:click="di('hola')">Di hola</button>
+        <button v-on:click="di('que')">Di que</button>
     </div>
 
-    <!-- Renderizado de lista: v-for en template -->
-    <ul id="template-list">
-        <template v-for="item in items">
-            <li :key="item.mensaje">{{ item.mensaje }}</li>
-            <li class="divider" role="presentation"></li>
-        </template>
-    </ul>
+    <!-- Acceso al evento DOM original -->
+    <div id="event-original">
+        <button v-on:click="alertar('El Form no se puede enviar aun.', $event)">
+            Enviar
+        </button>
+    </div>
 
-    <!-- Renderizado de lista: v-for con v-if -->
-    <ul id="todos-list">
-        <li v-for="todo in todos" v-if="!todo.isComplete" :key="todo.id">
-            {{ todo.text }}
-        </li>
-    </ul>
-
-    <!-- Renderizado de lista: Todo List con componente -->
-    <div id="todo-list-example">
-        <form @submit.prevent="addNewTodo">
-            <label for="new-todo">Agregar tarea</label>
-            <input v-model="newTodoText" id="new-todo" placeholder="Ej: Alimentar al gato">
-            <button>Agregar</button>
+    <!-- Modificadores de eventos -->
+    <div id="event-modifiers">
+        <form v-on:submit.prevent="onSubmit">
+            <input v-model="inputText" placeholder="Escribe algo">
+            <button type="submit">Enviar</button>
         </form>
-        <ul>
-            <todo-item
-                v-for="(todo, index) in todos"
-                :key="todo.id"
-                :title="todo.title"
-                @remove="todos.splice(index, 1)">
-            </todo-item>
-        </ul>
+        <button v-on:click.stop="hazEsto">Click con .stop</button>
+        <button v-on:click.once="hazEsto">Click con .once</button>
+    </div>
+
+    <!-- Modificadores de teclas -->
+    <div id="event-keys">
+        <input v-on:keyup.enter="submit" placeholder="Presiona Enter">
+        <input v-on:keyup.alt.67="clear" placeholder="Alt + C para limpiar">
+        <button @click.ctrl="onCtrlClick">Ctrl + Click</button>
+        <button @click.ctrl.exact="onCtrlExactClick">Ctrl Exacto</button>
+        <button @click.exact="onClickExact">Sin modificadores</button>
+    </div>
+
+    <!-- Modificador de botón del ratón -->
+    <div id="event-mouse">
+        <button @click.left="leftClick">Izquierdo</button>
+        <button @click.right="rightClick">Derecho</button>
+        <button @click.middle="middleClick">Medio</button>
     </div>
 
     <script src="index.js"></script>
