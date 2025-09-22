@@ -5,112 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Binding en Formularios Vue</title>
+    <title>Componentes Básicos Vue</title>
 </head>
 <body>
-    <!-- Input básico -->
-    <div id="form-input">
-        <input v-model="message" placeholder="edíteme">
-        <p>El mensaje es: {{ message }}</p>
+    <!-- Ejemplo base: botón contador -->
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
     </div>
 
-    <!-- Textarea -->
-    <div id="form-textarea">
-        <span>El mensaje multilínea es:</span>
-        <p style="white-space: pre-line;">{{ message }}</p>
-        <br>
-        <textarea v-model="message" placeholder="agregar múltiples líneas"></textarea>
+    <!-- Props: blog post simple -->
+    <div id="blog-post-demo">
+        <blog-post title="Mi viaje con Vue"></blog-post>
+        <blog-post title="Blogging con Vue"></blog-post>
+        <blog-post title="¿Por qué Vue es tan divertido?"></blog-post>
     </div>
 
-    <!-- Checkbox simple -->
-    <div id="form-checkbox">
-        <input type="checkbox" id="checkbox" v-model="checked">
-        <label for="checkbox">{{ checked }}</label>
+    <!-- Props dinámicas con v-for -->
+    <div id="blog-post-list-demo">
+        <blog-post
+            v-for="post in posts"
+            :key="post.id"
+            :title="post.title"
+            :content="post.content"
+        ></blog-post>
     </div>
 
-    <!-- Múltiples checkboxes -->
-    <div id="form-checkbox-array">
-        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-        <label for="jack">Jack</label>
-        <input type="checkbox" id="john" value="John" v-model="checkedNames">
-        <label for="john">John</label>
-        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-        <label for="mike">Mike</label>
-        <br>
-        <span>Checked names: {{ checkedNames }}</span>
+    <!-- Props como objeto -->
+    <div id="blog-post-object-demo">
+        <blog-post
+            v-for="post in posts"
+            :key="post.id"
+            :post="post"
+        ></blog-post>
     </div>
 
-    <!-- Radio -->
-    <div id="form-radio">
-        <input type="radio" id="uno" value="Uno" v-model="picked">
-        <label for="uno">Uno</label>
-        <br>
-        <input type="radio" id="dos" value="Dos" v-model="picked">
-        <label for="dos">Dos</label>
-        <br>
-        <span>Eligió: {{ picked }}</span>
+    <!-- Comunicación hijo-padre con eventos -->
+    <div id="blog-posts-events-demo">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+                v-for="post in posts"
+                :key="post.id"
+                :post="post"
+                @enlarge-text="postFontSize += 0.1"
+            ></blog-post>
+        </div>
     </div>
 
-    <!-- Select simple -->
-    <div id="form-select">
-        <select v-model="selected">
-            <option disabled value="">Seleccione un elemento</option>
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-        </select>
-        <span>Seleccionado: {{ selected }}</span>
+    <!-- v-model en componente personalizado -->
+    <div id="custom-input-demo">
+        <custom-input v-model="searchText"></custom-input>
+        <p>Texto de búsqueda: {{ searchText }}</p>
     </div>
 
-    <!-- Select múltiple -->
-    <div id="form-select-multiple">
-        <select v-model="selected" multiple>
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-        </select>
-        <br>
-        <span>Seleccionados: {{ selected }}</span>
+    <!-- Slots -->
+    <div id="slot-demo">
+        <alert-box>
+            Algo ha ocurrido mal.
+        </alert-box>
     </div>
 
-    <!-- Select con opciones dinámicas -->
-    <div id="form-select-dynamic">
-        <select v-model="selected">
-            <option v-for="option in options" v-bind:value="option.value">
-                {{ option.text }}
-            </option>
-        </select>
-        <span>Seleccionado: {{ selected }}</span>
-    </div>
-
-    <!-- Checkbox con true-value y false-value -->
-    <div id="form-checkbox-values">
-        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
-        <span>Valor: {{ toggle }}</span>
-    </div>
-
-    <!-- Radio con valor dinámico -->
-    <div id="form-radio-dynamic">
-        <input type="radio" v-model="pick" v-bind:value="a">
-        <span>Valor: {{ pick }}</span>
-    </div>
-
-    <!-- Select con objeto como valor -->
-    <div id="form-select-object">
-        <select v-model="selected">
-            <option v-bind:value="{ number: 123 }">123</option>
-        </select>
-        <span>Seleccionado: {{ selected.number }}</span>
-    </div>
-
-    <!-- Modificadores lazy, number y trim -->
-    <div id="form-modifiers">
-        <input v-model.lazy="msg" placeholder="Lazy (change)">
-        <input v-model.number="age" type="number" placeholder="Edad (number)">
-        <input v-model.trim="msgTrim" placeholder="Trim">
-        <p>Lazy: {{ msg }}</p>
-        <p>Edad: {{ age }}</p>
-        <p>Trim: {{ msgTrim }}</p>
+    <!-- Componentes dinámicos -->
+    <div id="dynamic-demo">
+        <button @click="currentTab = 'tab-a'">Tab A</button>
+        <button @click="currentTab = 'tab-b'">Tab B</button>
+        <component :is="currentTabComponent"></component>
     </div>
 
     <script src="index.js"></script>

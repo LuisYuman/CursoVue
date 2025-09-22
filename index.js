@@ -1,99 +1,138 @@
 const { createApp } = Vue;
 
-// Input básico
-createApp({
+// Ejemplo base: botón contador
+const componentsDemo = createApp({});
+componentsDemo.component('button-counter', {
     data() {
-        return { message: '' }
-    }
-}).mount('#form-input');
+        return { count: 0 }
+    },
+    template: `<button @click="count++">Me ha pulsado {{ count }} veces.</button>`
+});
+componentsDemo.mount('#components-demo');
 
-// Textarea
-createApp({
-    data() {
-        return { message: '' }
-    }
-}).mount('#form-textarea');
+// Props: blog post simple
+const blogPostDemo = createApp({});
+blogPostDemo.component('blog-post', {
+    props: ['title'],
+    template: `<h3>{{ title }}</h3>`
+});
+blogPostDemo.mount('#blog-post-demo');
 
-// Checkbox simple
-createApp({
-    data() {
-        return { checked: false }
-    }
-}).mount('#form-checkbox');
-
-// Múltiples checkboxes
-createApp({
-    data() {
-        return { checkedNames: [] }
-    }
-}).mount('#form-checkbox-array');
-
-// Radio
-createApp({
-    data() {
-        return { picked: '' }
-    }
-}).mount('#form-radio');
-
-// Select simple
-createApp({
-    data() {
-        return { selected: '' }
-    }
-}).mount('#form-select');
-
-// Select múltiple
-createApp({
-    data() {
-        return { selected: [] }
-    }
-}).mount('#form-select-multiple');
-
-// Select con opciones dinámicas
-createApp({
+// Props dinámicas con v-for
+const blogPostListDemo = createApp({
     data() {
         return {
-            selected: 'A',
-            options: [
-                { text: 'Uno', value: 'A' },
-                { text: 'Dos', value: 'B' },
-                { text: 'Tres', value: 'C' }
+            posts: [
+                { id: 1, title: 'Mi viaje con Vue', content: 'Contenido 1' },
+                { id: 2, title: 'Blogging con Vue', content: 'Contenido 2' },
+                { id: 3, title: '¿Por qué Vue es tan divertido?', content: 'Contenido 3' }
             ]
         }
     }
-}).mount('#form-select-dynamic');
+});
+blogPostListDemo.component('blog-post', {
+    props: ['title', 'content'],
+    template: `
+        <div>
+            <h3>{{ title }}</h3>
+            <div v-html="content"></div>
+        </div>
+    `
+});
+blogPostListDemo.mount('#blog-post-list-demo');
 
-// Checkbox con true-value y false-value
-createApp({
-    data() {
-        return { toggle: 'no' }
-    }
-}).mount('#form-checkbox-values');
-
-// Radio con valor dinámico
-createApp({
-    data() {
-        return {
-            pick: '',
-            a: 'valor-dinamico'
-        }
-    }
-}).mount('#form-radio-dynamic');
-
-// Select con objeto como valor
-createApp({
-    data() {
-        return { selected: { number: 0 } }
-    }
-}).mount('#form-select-object');
-
-// Modificadores lazy, number y trim
-createApp({
+// Props como objeto
+const blogPostObjectDemo = createApp({
     data() {
         return {
-            msg: '',
-            age: null,
-            msgTrim: ''
+            posts: [
+                { id: 1, title: 'Mi viaje con Vue', content: 'Contenido 1' },
+                { id: 2, title: 'Blogging con Vue', content: 'Contenido 2' },
+                { id: 3, title: '¿Por qué Vue es tan divertido?', content: 'Contenido 3' }
+            ]
         }
     }
-}).mount('#form-modifiers');
+});
+blogPostObjectDemo.component('blog-post', {
+    props: ['post'],
+    template: `
+        <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <div v-html="post.content"></div>
+        </div>
+    `
+});
+blogPostObjectDemo.mount('#blog-post-object-demo');
+
+// Comunicación hijo-padre con eventos
+const blogPostsEventsDemo = createApp({
+    data() {
+        return {
+            posts: [
+                { id: 1, title: 'Mi viaje con Vue', content: 'Contenido 1' },
+                { id: 2, title: 'Blogging con Vue', content: 'Contenido 2' },
+                { id: 3, title: '¿Por qué Vue es tan divertido?', content: 'Contenido 3' }
+            ],
+            postFontSize: 1
+        }
+    }
+});
+blogPostsEventsDemo.component('blog-post', {
+    props: ['post'],
+    template: `
+        <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <button @click="$emit('enlarge-text', 0.1)">Agrandar texto</button>
+            <div v-html="post.content"></div>
+        </div>
+    `
+});
+blogPostsEventsDemo.mount('#blog-posts-events-demo');
+
+// v-model en componente personalizado
+const customInputDemo = createApp({
+    data() {
+        return { searchText: '' }
+    }
+});
+customInputDemo.component('custom-input', {
+    props: ['value'],
+    template: `
+        <input
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+        >
+    `
+});
+customInputDemo.mount('#custom-input-demo');
+
+// Slots
+const slotDemo = createApp({});
+slotDemo.component('alert-box', {
+    template: `
+        <div class="demo-alert-box">
+            <strong>Error!</strong>
+            <slot></slot>
+        </div>
+    `
+});
+slotDemo.mount('#slot-demo');
+
+// Componentes dinámicos
+const dynamicDemo = createApp({
+    data() {
+        return { currentTab: 'tab-a' }
+    },
+    computed: {
+        currentTabComponent() {
+            return this.currentTab;
+        }
+    }
+});
+dynamicDemo.component('tab-a', {
+    template: `<div>Contenido de Tab A</div>`
+});
+dynamicDemo.component('tab-b', {
+    template: `<div>Contenido de Tab B</div>`
+});
+dynamicDemo.mount('#dynamic-demo');
